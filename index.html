@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Gorgeous Girl's Love Adventure 💖✨</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Comic Sans MS', sans-serif;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 18s ease infinite;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% {background-position:0% 50%}
+            50% {background-position:100% 50%}
+            100% {background-position:0% 50%}
+        }
+
+        .page {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(40px) scale(0.92);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+        }
+
+        .active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: all;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: clamp(2.4rem, 6vw, 4.2rem);
+            margin: 0.4em 0;
+            text-shadow: 0 0 30px rgba(255,20,147,0.7), 0 0 60px rgba(255,105,180,0.4);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff1493; }
+            to   { text-shadow: 0 0 40px #ff1493, 0 0 80px #c71585; }
+        }
+
+        p {
+            font-size: clamp(1.1rem, 3vw, 1.6rem);
+            max-width: 780px;
+            line-height: 1.6;
+            margin: 1em 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+        }
+
+        .btn {
+            font-size: 1.3rem;
+            padding: 16px 40px;
+            margin: 12px;
+            border: none;
+            border-radius: 999px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.6s;
+        }
+
+        .btn:hover::before { left: 100%; }
+
+        .btn-primary   { background: linear-gradient(45deg, #ff3366, #ff6b6b); }
+        .btn-flirt     { background: linear-gradient(135deg, #a78bfa, #7c3aed); }
+        .btn-kiss      { background: linear-gradient(45deg, #ec4899, #db2777); animation: beat 1.8s infinite; }
+        .btn-secret    { background: linear-gradient(45deg, #8b5cf6, #d946ef); }
+
+        @keyframes beat {
+            0%,100% { transform: scale(1); }
+            50%     { transform: scale(1.14); }
+        }
+
+        .floating-heart, .floating-kiss, .floating-star {
+            position: absolute;
+            font-size: 2.2rem;
+            pointer-events: none;
+            animation: floatAway 6s forwards;
+            z-index: 5;
+        }
+
+        @keyframes floatAway {
+            0%   { transform: translateY(0) scale(0.6) rotate(0deg); opacity: 0.9; }
+            30%  { transform: translateY(-80px) scale(1.3) rotate(15deg); }
+            100% { transform: translateY(-380px) translateX(var(--x)) scale(0.4) rotate(360deg); opacity: 0; }
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkle 1.8s forwards;
+        }
+
+        @keyframes sparkle {
+            0%   { transform: scale(0) translate(0,0); opacity: 1; }
+            50%  { transform: scale(1.6) translate(var(--dx), var(--dy)); }
+            100% { transform: scale(0) translate(var(--dx), var(--dy)); opacity: 0; }
+        }
+
+        .love-meter-container {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 420px;
+            z-index: 100;
+            background: rgba(0,0,0,0.4);
+            border-radius: 30px;
+            padding: 8px;
+            backdrop-filter: blur(6px);
+        }
+
+        .love-meter {
+            height: 28px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .meter-progress {
+            height: 100%;
+            width: 18%;
+            background: linear-gradient(90deg, #ec4899, #f472b6, #fda4af);
+            transition: width 0.9s ease-out;
+            box-shadow: 0 0 30px #ec4899;
+        }
+
+        .meter-text {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            text-shadow: 0 0 10px black;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="page active" id="p1">
+    <h1>Heyyy Gorgeous 💕</h1>
+    <p>I made this silly thing just for you...<br>because normal "Happy Valentine's" messages are too boring for us.</p>
+    <div>
+        <button class="btn btn-kiss" onclick="sendKiss(); nextPage(2)">Ready for our chaotic love story? →</button>
+        <button class="btn btn-flirt" onclick="flirtBurst()">Flirt with me first 😏</button>
+    </div>
+</div>
+
+<div class="page" id="p2">
+    <h1>Level 1 – Caught you staring</h1>
+    <p>Real talk: I still get butterflies when you smile at me. Don't tell anyone.</p>
+    <button class="btn btn-primary" onclick="nextPage(3)">I know you do too 😉</button>
+    <button class="btn btn-flirt" onclick="addLove(12)">Blush for me</button>
+    <button class="btn btn-kiss" onclick="sendKiss()">Send virtual kiss</button>
+</div>
+
+<div class="page" id="p3">
+    <h1>Level 2 – Memory unlocked #1</h1>
+    <p>Pick our most chaotic moment:</p>
+    <button class="btn btn-primary" onclick="memory('1')">Burnt pancakes morning</button>
+    <button class="btn btn-primary" onclick="memory('2')">Lost at 2 AM adventure</button>
+    <button class="btn btn-primary" onclick="memory('3')">TikTok dance disaster</button>
+    <p id="memText" style="min-height:80px; margin-top:1.5em; font-style:italic;"></p>
+    <button class="btn btn-secret" id="memNext1" style="display:none;" onclick="nextPage(4)">Keep going... 💜</button>
+</div>
+
+<div class="page" id="p4">
+    <h1>Level 3 – Truth or Dare (Round 1)</h1>
+    <p>Choose your fate, baby:</p>
+    <button class="btn btn-flirt" onclick="truthOrDare('truth')">Truth</button>
+    <button class="btn btn-flirt" onclick="truthOrDare('dare')">Dare</button>
+    <p id="todResult" style="margin-top:2em; font-size:1.4rem; min-height:100px;"></p>
+    <button class="btn btn-primary" id="todNext1" style="display:none;" onclick="nextPage(5)">Next level unlocked</button>
+</div>
+
+<div class="page" id="p5">
+    <h1>Level 4 – The Spicy Love Calculator</h1>
+    <p>Our compatibility is obviously illegal levels of perfect, but let's see the number:</p>
+    <button class="btn btn-kiss" onclick="calculateChaos()">Shake the magic 8-ball</button>
+    <p id="calcResult" style="font-size:2.2rem; margin:1.2em 0; min-height:120px; font-weight:bold;"></p>
+    <button class="btn btn-secret" id="calcNext" style="display:none;" onclick="nextPage(6)">I'm blushing...</button>
+</div>
+
+<div class="page" id="p6">
+    <h1>Level 5 – Memory unlocked #2</h1>
+    <p>Another golden moment?</p>
+    <button class="btn btn-primary" onclick="memory2('1')">When we fought over the last slice</button>
+    <button class="btn btn-primary" onclick="memory2('2')">That rainy day cuddle session</button>
+    <button class="btn btn-primary" onclick="memory2('3')">When I tried to cook for you (disaster)</button>
+    <p id="memText2" style="min-height:80px; margin-top:1.5em; font-style:italic;"></p>
+    <button class="btn btn-secret" id="memNext2" style="display:none;" onclick="nextPage(7)">More chaos ahead...</button>
+</div>
+
+<div class="page" id="p7">
+    <h1>Level 6 – Pick Your Nickname For Me</h1>
+    <p>What do you secretly call me in your head?</p>
+    <button class="btn btn-flirt" onclick="nickname('1')">Trouble</button>
+    <button class="btn btn-flirt" onclick="nickname('2')">Cutie</button>
+    <button class="btn btn-flirt" onclick="nickname('3')">Idiot (affectionate)</button>
+    <button class="btn btn-flirt" onclick="nickname('4')">My everything</button>
+    <p id="nickResult" style="margin-top:2em; font-size:1.6rem;"></p>
+    <button class="btn btn-primary" id="nickNext" style="display:none;" onclick="nextPage(8)">You’re too sweet</button>
+</div>
+
+<div class="page" id="p8">
+    <h1>Level 7 – Truth or Dare (Round 2 – spicier)</h1>
+    <p>Round two — no holding back</p>
+    <button class="btn btn-flirt" onclick="truthOrDare2('truth')">Truth</button>
+    <button class="btn btn-flirt" onclick="truthOrDare2('dare')">Dare</button>
+    <p id="todResult2" style="margin-top:2em; font-size:1.4rem; min-height:100px;"></p>
+    <button class="btn btn-primary" id="todNext2" style="display:none;" onclick="nextPage(9)">Almost at the end...</button>
+</div>
+
+<div class="page" id="p9">
+    <h1>Level 8 – One Thing I Love About You</h1>
+    <p>Click to reveal (random each time)</p>
+    <button class="btn btn-kiss" onclick="revealLoveThing()">Tell me something cute</button>
+    <p id="loveThingText" style="font-size:1.8rem; margin:1.5em 0; min-height:120px;"></p>
+    <button class="btn btn-secret" id="loveNext" style="display:none;" onclick="nextPage(10)">Final slide</button>
+</div>
+
+<div class="page" id="p10">
+    <h1>Level 9 – The End (for now) 💞</h1>
+    <p>To the girl who makes every boring day feel like an adventure...</p>
+    <p style="font-size:1.8rem; margin:1.5em 0;">
+        I love you more than yesterday<br>
+        but less than tomorrow 💖<br><br>
+        You're my favorite notification.
+    </p>
+    <div style="margin:2em 0;">
+        <button class="btn btn-kiss" onclick="finalFireworks()">Explode my heart</button>
+        <button class="btn btn-flirt" onclick="addLove(35)">Hold me forever</button>
+    </div>
+</div>
+
+<div class="love-meter-container">
+    <div class="love-meter">
+        <div class="meter-progress" id="loveBar"></div>
+        <div class="meter-text" id="loveText">Love Meter: 18%</div>
+    </div>
+</div>
+
+<script>
+    let love = 18;
+    let memoriesFound = 0;
+    let memoriesFound2 = 0;
+
+    const updateMeter = () => {
+        love = Math.min(love + 0, 100);
+        document.getElementById('loveBar').style.width = love + '%';
+        document.getElementById('loveText').textContent = `Love Meter: ${Math.round(love)}%`;
+    };
+
+    const addLove = (points) => {
+        love = Math.min(love + points, 100);
+        updateMeter();
+        createParticles(25);
+    };
+
+    const nextPage = n => {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('p'+n).classList.add('active');
+        addLove(9);
+        createFloating('💖', 8);
+    };
+
+    const sendKiss = () => {
+        addLove(7);
+        const kiss = document.createElement('div');
+        kiss.className = 'floating-kiss';
+        kiss.textContent = '💋';
+        kiss.style.left = Math.random()*100 + 'vw';
+        kiss.style.bottom = '-30px';
+        kiss.style.setProperty('--x', (Math.random()-0.5)*180 + 'px');
+        document.body.appendChild(kiss);
+        setTimeout(()=>kiss.remove(), 6200);
+    };
+
+    const createFloating = (emoji, count) => {
+        for(let i=0;i<count;i++){
+            setTimeout(()=>{
+                const el = document.createElement('div');
+                el.className = 'floating-heart';
+                el.textContent = emoji;
+                el.style.left = Math.random()*100 + 'vw';
+                el.style.bottom = '-60px';
+                el.style.setProperty('--x', (Math.random()-0.5)*240 + 'px');
+                document.body.appendChild(el);
+                setTimeout(()=>el.remove(), 6500);
+            }, i*180);
+        }
+    };
+
+    const createParticles = count => {
+        for(let i=0;i<count;i++){
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random()*100 + 'vw';
+            p.style.top = Math.random()*100 + 'vh';
+            p.style.setProperty('--dx', (Math.random()-0.5)*180 + 'px');
+            p.style.setProperty('--dy', (Math.random()-0.5)*180 + 'px');
+            document.body.appendChild(p);
+            setTimeout(()=>p.remove(), 2200);
+        }
+    };
+
+    // ───── Memory set 1 ─────
+    const memory = id => {
+        const texts = {
+            '1': "Burnt pancakes, smoke alarm symphony, you laughing till you cried… best morning ever 🔥😂",
+            '2': "Drove around forever looking for ice cream at 2am… ended up eating cereal. Classic 🍨",
+            '3': "You tried teaching me Renegade. I looked like malfunctioning robot. Still danced with you 💃🕺"
+        };
+        document.getElementById('memText').textContent = texts[id] || "Sneaky click… I like it 😏";
+        memoriesFound++;
+        addLove(11);
+        createFloating('✨', 5);
+        if(memoriesFound >= 2){
+            document.getElementById('memNext1').style.display = 'inline-block';
+        }
+    };
+
+    // ───── Memory set 2 ─────
+    const memory2 = id => {
+        const texts2 = {
+            '1': "We literally fought over the last pizza slice… then split it anyway 🍕❤️",
+            '2': "Rainy day, blanket fort, you falling asleep on my chest… perfect ☔",
+            '3': "I tried to impress you with cooking. Kitchen looked like crime scene. You still ate it 😭🍳"
+        };
+        document.getElementById('memText2').textContent = texts2[id] || "You always pick the chaotic ones… my type";
+        memoriesFound2++;
+        addLove(11);
+        createFloating('💫', 5);
+        if(memoriesFound2 >= 2){
+            document.getElementById('memNext2').style.display = 'inline-block';
+        }
+    };
+
+    // ───── Truth or Dare 1 ─────
+    const truthOrDare = choice => {
+        const truths = [
+            "I still get nervous before our dates… even now 🥹",
+            "Your sleepy morning voice is my favorite sound ever 🎧",
+            "I re-watch our silly videos when I miss you"
+        ];
+        const dares = [
+            "Send me your current face right now 😜",
+            "Say \"I love you\" in the weirdest voice possible 🎤",
+            "Plan a ridiculous late-night date with me this week"
+        ];
+        const result = choice==='truth'
+            ? truths[Math.floor(Math.random()*truths.length)]
+            : dares[Math.floor(Math.random()*dares.length)];
+
+        document.getElementById('todResult').textContent = result;
+        document.getElementById('todNext1').style.display = 'inline-block';
+        addLove(14);
+        sendKiss();
+    };
+
+    // ───── Truth or Dare 2 (spicier) ─────
+    const truthOrDare2 = choice => {
+        const truths2 = [
+            "The first time I saw you in my hoodie… brain stopped working 🫠",
+            "I think about kissing your neck way more than I admit 😳",
+            "You're the only person I want to annoy for the rest of my life"
+        ];
+        const dares2 = [
+            "Text me something naughty right now 😈",
+            "Send me a voice note saying my name slowly…",
+            "Next time we meet, kiss me somewhere unexpected"
+        ];
+        const result = choice==='truth'
+            ? truths2[Math.floor(Math.random()*truths2.length)]
+            : dares2[Math.floor(Math.random()*dares2.length)];
+
+        document.getElementById('todResult2').textContent = result;
+        document.getElementById('todNext2').style.display = 'inline-block';
+        addLove(16);
+        createFloating('🔥💋', 6);
+    };
+
+    // ───── Nickname picker ─────
+    const nickname = id => {
+        const names = {
+            '1': "Trouble… accurate 😈",
+            '2': "Cutie… I’ll allow it 🥰",
+            '3': "Idiot (affectionate)… you’re not wrong 😂",
+            '4': "My everything… damn, you got me 🥹💘"
+        };
+        document.getElementById('nickResult').textContent = names[id];
+        document.getElementById('nickNext').style.display = 'inline-block';
+        addLove(13);
+        sendKiss();
+    };
+
+    // ───── Random love thing ─────
+    const loveThings = [
+        "Your laugh when you’re trying not to laugh… kills me every time",
+        "How you steal my hoodies and then pretend you don’t know where they are",
+        "The way you look at me when you think I’m not watching",
+        "Your sleepy mumbles in the morning… cutest thing ever",
+        "How you always know exactly when I need a hug"
+    ];
+
+    const revealLoveThing = () => {
+        const thing = loveThings[Math.floor(Math.random()*loveThings.length)];
+        document.getElementById('loveThingText').textContent = thing;
+        document.getElementById('loveNext').style.display = 'inline-block';
+        addLove(18);
+        createFloating('💞', 10);
+    };
+
+    const calculateChaos = () => {
+        const score = 82 + Math.floor(Math.random()*18);
+        const messages = [
+            `${score}% — We're basically a walking rom-com`,
+            `${score}% — The universe called… it’s jealous`,
+            `${score}% — We broke the scale. Oops 💥`,
+            `${score}% — Illegal chemistry. Arrest us both`
+        ];
+        document.getElementById('calcResult').textContent = messages[Math.floor(Math.random()*messages.length)];
+        document.getElementById('calcNext').style.display = 'inline-block';
+        addLove(22);
+        createFloating('💥❤️', 12);
+    };
+
+    const finalFireworks = () => {
+        addLove(45);
+        createFloating('💖', 40);
+        createParticles(80);
+        for(let i=0; i<24; i++){
+            setTimeout(sendKiss, i*180);
+        }
+        setTimeout(()=>{
+            alert("You just made my heart explode 400 times 💞\nI love you, my favorite human.");
+        }, 2800);
+    };
+
+    const flirtBurst = () => {
+        addLove(10);
+        createFloating('😘💕', 12);
+        createParticles(30);
+    };
+
+    // Auto floating hearts
+    setInterval(()=>{
+        if(Math.random() > 0.65) createFloating('💞', 3);
+    }, 5200);
+
+    // Space = kiss
+    window.addEventListener('keydown', e=>{
+        if(e.code==='Space'){
+            e.preventDefault();
+            sendKiss();
+        }
+    });
+</script>
+</body>
+</html>
